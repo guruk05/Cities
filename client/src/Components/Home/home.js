@@ -1,8 +1,11 @@
+// Imports
+
 import React from "react";
 import "./home.css";
 import { Card, Toast } from "react-bootstrap";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 const url = "https://nut-case.s3.amazonaws.com/jobs.json";
 
 class Home extends React.Component {
@@ -11,11 +14,9 @@ class Home extends React.Component {
     this.state = {
       jobDatas: [],
       jobs: [],
-      value: [],
       loading: false,
       jobsPerPage: [10],
       currentPage: [1],
-      currentJobs: [],
       showCard: false
     };
   }
@@ -30,27 +31,22 @@ class Home extends React.Component {
     console.log("ComponentDidMOunt is Running");
   };
 
-  handleInput = e => {
-    this.setState({ value: e.target.value });
-  };
+//  Showcity method sets a boolean value to state for maximizing card
 
-  showCity = async index => {
+  showCity = async (index) => {
     await this.setState({ jobs: this.state.jobDatas[index] });
     this.setState({ showCard: true });
-    this.state.jobDatas.slice(0,10).map(cities => {
-        let cityData = cities.location
-        this.setState({value:cityData})
-    })
-    console.log(this.state.value);
-    this.postData()
+    // this.postData()
   };
+
+// toggleCard method for toggling back to cards list
 
   toggleCard = () => {
       this.setState({ showCard: false });
   }
 
+// postData method - axios post call 
    postData = async () => {
-    console.log(this.state.jobDatas.slice(0,10));
     try {
         await axios.post("http://localhost:8000/cities", {
           data: this.state.jobDatas.slice(0,10)
@@ -62,6 +58,7 @@ class Home extends React.Component {
       }
   };
 
+  // render method
   render() {
     const indexOfLastJob = this.state.currentPage * this.state.jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - this.state.jobsPerPage;

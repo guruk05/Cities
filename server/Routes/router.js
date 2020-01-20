@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-var CityList = require("../Models/citySchema");
-let cityData;
+let CityList = require("../Models/citySchema");
 let cityList;
 
 //@type                      POST
@@ -12,14 +11,13 @@ let cityList;
 router.post("/cities", async (req, res) => {
   try {
       const requestData = await req.body.data;
-      requestData.map(cities => {
-          cityData = cities.location;
+      requestData.map( async (cities) => {
           cityList = new CityList({
             cityName: cities.location
           });
           let response = await cityList.save().then();
+          console.log(response);
         });
-        console.log(response);
   } catch (err) {
     console.log(err);
   }
