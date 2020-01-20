@@ -28,6 +28,7 @@ class Home extends React.Component {
     const jobs = data.data;
     this.setState({ jobDatas: jobs });
     this.setState({ loading: false });
+    this.postData()
     console.log("ComponentDidMOunt is Running");
   };
 
@@ -36,7 +37,6 @@ class Home extends React.Component {
   showCity = async (index) => {
     await this.setState({ jobs: this.state.jobDatas[index] });
     this.setState({ showCard: true });
-    // this.postData()
   };
 
 // toggleCard method for toggling back to cards list
